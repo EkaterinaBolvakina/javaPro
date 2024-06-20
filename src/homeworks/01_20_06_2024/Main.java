@@ -1,8 +1,6 @@
 package homework;
 
 public class Main {
-    private static int counterMultiThread;
-
     private static int countNumbers(int StartNumber, int EndNumber) {
         int counter1 = 0;
         for (int i = StartNumber; i <= EndNumber; i++) {
@@ -13,8 +11,18 @@ public class Main {
         return counter1;
     }
 
-    public static synchronized void countNum(int StartNumber, int EndNumber) {
-        counterMultiThread = counterMultiThread + countNumbers(StartNumber, EndNumber);
+    private static int counterMultiThread;
+
+    public static synchronized void increment() {
+        counterMultiThread++;
+    }
+
+    public static void countNumbersMultiThread(int startNumber, int endNumber) {
+        for (int i = startNumber; i <= endNumber; i++) {
+            if (i % 21 == 0 && Integer.toString(i).contains("3")) {
+                increment();
+            }
+        }
     }
 
     public static void main(String[] args) {
@@ -22,9 +30,11 @@ public class Main {
         Integer counterSingleThread = countNumbers(1, 2_000_000);
         System.out.println("Single-Threading result: " + counterSingleThread + " = count of numbers from range [1; 2_000_000] are divisible by 21 and contain the digit 3");
 
-        countNum(1, 1_000_000);
-        Thread2 thread2 = new Thread2();
+        Thread2 thread2 = new Thread2(1_000_001, 2_000_000);
         thread2.start();
+
+        countNumbersMultiThread(1, 1_000_000);
+
         try {
             thread2.join();
         } catch (InterruptedException e) {
