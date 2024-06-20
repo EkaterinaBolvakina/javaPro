@@ -1,13 +1,12 @@
-package task_01;
+package lessons.lesson_01_20_06_2024.task_01;
 
-public class MyThread1 extends Thread {
-
+public class MyThread2 implements Runnable {
     @Override
     public void run() {
-        for (int i = 100; i < 110 ; i++) {
+        for (int i = 10000; i < 10010; i++) {
 
             try {
-                Thread.sleep(200);
+                Thread.sleep(500);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

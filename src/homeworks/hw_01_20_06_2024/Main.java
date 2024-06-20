@@ -1,4 +1,4 @@
-package homework;
+package homeworks.hw_01_20_06_2024;
 
 public class Main {
     private static int countNumbers(int StartNumber, int EndNumber) {
@@ -49,3 +49,4 @@ public class Main {
         }
     }
 }
+

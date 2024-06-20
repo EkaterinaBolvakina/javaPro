@@ -1,4 +1,4 @@
-package task_01;
+package lessons.lesson_01_20_06_2024.task_01;
 
 public class Main {
     public static void main(String[] args) {

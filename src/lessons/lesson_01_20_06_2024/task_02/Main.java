@@ -1,4 +1,4 @@
-package task_02;
+package lessons.lesson_01_20_06_2024.task_02;
 
 public class Main {
     public static int counter;

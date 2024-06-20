@@ -1,4 +1,4 @@
-package homework;
+package homeworks.hw_01_20_06_2024;
 
 public class Thread2 extends Thread {
     private int startNumber;
