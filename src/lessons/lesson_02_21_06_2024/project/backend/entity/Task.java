@@ -6,6 +6,9 @@ public class Task {
     private String taskDescription;
     private boolean isDone;
 
+    public Task() {
+    }
+
     public Task(Integer taskId, String taskName, String taskDescription, boolean isDone) {
         this.taskId = taskId;
         this.taskName = taskName;

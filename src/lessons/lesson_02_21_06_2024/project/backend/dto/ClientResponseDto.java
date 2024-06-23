@@ -1,17 +1,19 @@
 package lessons.lesson_02_21_06_2024.project.backend.dto;
 
-public class ClientResponseDto<T> {
-    private int responseCode;
-    private T responseInfo;
-    private String message;
+import java.util.List;
 
-    public ClientResponseDto(int responseCode, T responseInfo, String message) {
+public class ClientResponseDto<T> {
+    private Integer responseCode;
+    private T responseInfo;
+    private List<String> errors;
+
+    public ClientResponseDto(Integer responseCode, T responseInfo, List<String> errors) {
         this.responseCode = responseCode;
         this.responseInfo = responseInfo;
-        this.message = message;
+        this.errors = errors;
     }
 
-    public int getResponseCode() {
+    public Integer getResponseCode() {
         return responseCode;
     }
 
@@ -19,8 +21,8 @@ public class ClientResponseDto<T> {
         return responseInfo;
     }
 
-    public String getMessage() {
-        return message;
+    public List<String> getErrors() {
+        return errors;
     }
 
     @Override
@@ -28,7 +30,8 @@ public class ClientResponseDto<T> {
         return "ClientResponseDto{" +
                 "responseCode=" + responseCode +
                 ", responseInfo=" + responseInfo +
-                ", message='" + message + '\'' +
+                ", errors=" + errors +
                 '}';
     }
 }
+

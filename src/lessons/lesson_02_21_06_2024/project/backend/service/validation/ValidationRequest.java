@@ -6,16 +6,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ValidationRequest {
-    public boolean checkTaskName(TaskDto taskDto) {
+    public List<String> checkTask(TaskDto taskDto) {
         List<String> errors = new ArrayList<>();
-        String taskName = taskDto.getTaskNameDto();
-        if (taskName.isBlank()) {
+
+        if (taskDto.getTaskNameDto().isBlank()) {
             errors.add("Task name must be not null \n");
         }
-        if ( (taskName.isEmpty()) || (taskName.length() > 40) ) {
-            errors.add("Task name must be between 1 and 40 letters \n");
+        if (taskDto.getTaskDescriptionDto().isBlank()) {
+            errors.add("Task description must be not null \n");
         }
-        if (!errors.isEmpty()) throw new RuntimeException(errors.toString());
-        return  true;
+        if (taskDto.getTaskNameDto().length() < 3) {
+            errors.add("Task name cannot be less than 3 letters \n");
+        }
+        if (taskDto.getTaskNameDto().length() > 15) {
+            errors.add("Task name cannot be more then 15 letters \n");
+        }
+        if (taskDto.getTaskDescriptionDto().length() < 3) {
+            errors.add("Task description cannot be less than 3 letters \n");
+        }
+        if (taskDto.getTaskDescriptionDto().length() > 30) {
+            errors.add("Task description cannot be more then 30 letters \n");
+        }
+        return errors;
     }
 }

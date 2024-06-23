@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public class TaskRepository implements TaskRepositoryInterface {
 
-    private int taskId = 0;
+    private Integer taskId = 0;
 
     private List<Task> tasks;
 
@@ -25,20 +25,15 @@ public class TaskRepository implements TaskRepositoryInterface {
     }
 
     @Override
-    public Task update(Task taskToUpdate) {
-        boolean found = false;
+    public Optional<Task> update(Task taskToUpdate) {
         for (Task task : tasks) {
             if (task.getTaskId().equals(taskToUpdate.getTaskId())) {
-                String taskDesc = taskToUpdate.getTaskDescription();
-                task.setTaskDescription(taskDesc);
-                found = true;
-                break;
+                String newTaskDesc = taskToUpdate.getTaskDescription();
+                task.setTaskDescription(newTaskDesc);
+                return Optional.of(task);
             }
         }
-        if (!found) {
-            System.out.println("Task is not exist");
-        }
-        return taskToUpdate;
+        return Optional.empty();
     }
 
     @Override
@@ -54,11 +49,23 @@ public class TaskRepository implements TaskRepositoryInterface {
         return false;
     }
 
+    // alternativ:
+    public boolean deleteById(Integer id) {
+        Optional<Task> foundedTaskById = findById(id);
+
+        if (foundedTaskById.isPresent()) {
+            tasks.remove(foundedTaskById.get());
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     @Override
     public Optional<Task> findById(Integer taskId) {
-        for (Task task : tasks) {
-            if (task.getTaskId().equals(taskId)) {
-                return Optional.of(task);
+        for (Task currentTask : tasks) {
+            if (currentTask.getTaskId().equals(taskId)) {
+                return Optional.of(currentTask);
             }
         }
         return Optional.empty();
@@ -72,6 +79,18 @@ public class TaskRepository implements TaskRepositoryInterface {
             }
         }
         return Optional.empty();
+    }
+//alternativ über stream:
+    public Optional<Task> findByIdStream(Integer taskId) {
+        return tasks.stream()
+                .filter(currentTask -> currentTask.getTaskId().equals(taskId))
+                .findFirst();
+    }
+
+    public List<Task> findTaskByNameStream(String taskName) {
+        return tasks.stream()
+                .filter(currentTask -> currentTask.getTaskName().equals(taskName))
+                .toList();
     }
 
     @Override
