@@ -102,4 +102,42 @@ class TaskServiceTest {
         assertNull(null);
         assertFalse(responseDto.getErrors().isEmpty());
     }
+    @Test
+    void updateTaskDescriptionById() {
+        TaskDto taskDto = new TaskDto("Brot", "Brot kaufen");
+        taskRepository.add(new Task(1, taskDto.getTaskNameDto(), taskDto.getTaskDescriptionDto(), false));
+        Integer id = 1;
+        String newTaskDescription = "Brot kaufen und schneiden";
+        ClientResponseDto<Task> responseDto = taskService.updateTaskDescriptionById(id,newTaskDescription);
+
+        assertEquals(200, responseDto.getResponseCode());
+        assertEquals("Brot", responseDto.getResponseInfo().getTaskName());
+        assertEquals("Brot kaufen und schneiden", responseDto.getResponseInfo().getTaskDescription());
+        assertTrue(responseDto.getErrors().isEmpty());
+    }
+    @Test
+    void updateTaskDescriptionByIdError1() {
+        TaskDto taskDto = new TaskDto("Brot", "Brot kaufen");
+        taskRepository.add(new Task(1, taskDto.getTaskNameDto(), taskDto.getTaskDescriptionDto(), false));
+        Integer id = 2;
+        String newTaskDescription = "Brot kaufen und schneiden";
+        ClientResponseDto<Task> responseDto = taskService.updateTaskDescriptionById(id,newTaskDescription);
+
+        assertEquals(400, responseDto.getResponseCode());
+        assertNull(null);
+        assertFalse(responseDto.getErrors().isEmpty());
+    }
+    @Test
+    void updateTaskDescriptionByIdError2() {
+        TaskDto taskDto = new TaskDto("Brot", "Brot kaufen");
+        taskRepository.add(new Task(1, taskDto.getTaskNameDto(), taskDto.getTaskDescriptionDto(), false));
+        Integer id = 1;
+        String newTaskDescription = "Br";
+        ClientResponseDto<Task> responseDto = taskService.updateTaskDescriptionById(id,newTaskDescription);
+
+        assertEquals(400, responseDto.getResponseCode());
+        assertNull(null);
+        assertFalse(responseDto.getErrors().isEmpty());
+    }
+
 }
