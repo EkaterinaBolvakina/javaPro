@@ -25,11 +25,10 @@ public class TaskRepository implements TaskRepositoryInterface {
     }
 
     @Override
-    public Optional<Task> update(Task taskToUpdate) {
+    public Optional<Task> update(Integer taskId, String newTaskDescription) {
         for (Task task : tasks) {
-            if (task.getTaskId().equals(taskToUpdate.getTaskId())) {
-                String newTaskDesc = taskToUpdate.getTaskDescription();
-                task.setTaskDescription(newTaskDesc);
+            if (task.getTaskId().equals(taskId)) {
+                task.setTaskDescription(newTaskDescription);
                 return Optional.of(task);
             }
         }
@@ -86,7 +85,7 @@ public class TaskRepository implements TaskRepositoryInterface {
                 .filter(currentTask -> currentTask.getTaskId().equals(taskId))
                 .findFirst();
     }
-
+    @Override
     public List<Task> findTaskByNameStream(String taskName) {
         return tasks.stream()
                 .filter(currentTask -> currentTask.getTaskName().equals(taskName))

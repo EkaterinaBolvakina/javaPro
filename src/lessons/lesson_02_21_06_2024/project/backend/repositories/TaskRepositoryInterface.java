@@ -7,10 +7,14 @@ import java.util.Optional;
 
 public interface TaskRepositoryInterface {
     public Task add(Task newTask);
-    public Optional<Task> update(Task taskToUpdate);
+    // public Optional<Task> update(Task taskToUpdate);
+
+    public Optional<Task> update(Integer taskId, String newTaskDescription);
+
     public boolean removeById(Integer taskId);
     public Optional<Task> findById(Integer taskId);
     public Optional<Task> findByTaskName(String taskName);
+    public List<Task> findTaskByNameStream(String taskName);
     public List<Task> findAll();
 
 
