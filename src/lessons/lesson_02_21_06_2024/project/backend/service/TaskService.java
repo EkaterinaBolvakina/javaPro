@@ -47,7 +47,7 @@ public class TaskService {
             return new ClientResponseDto<>(200, foundedTask, errors);
         } else {
             errors.add("Task not found with ID: " + taskId);
-            return new ClientResponseDto<>(400, new Task(), errors);
+            return new ClientResponseDto<>(400, null, errors);
         }
     }
 
@@ -63,7 +63,7 @@ public class TaskService {
             return new ClientResponseDto<>(200, foundedTasks, errors);
         } else {
             errors.add("Task not found with name: " + taskName);
-            return new ClientResponseDto<>(400, Collections.emptyList(), errors);
+            return new ClientResponseDto<>(400, null, errors);
         }
     }
 
@@ -74,12 +74,12 @@ public class TaskService {
         if (!errors.isEmpty()) {
             return new ClientResponseDto<>(400, null, errors);
         }
-        Boolean taskIsDeleted = taskRepository.removeById(taskId);
+        boolean taskIsDeleted = taskRepository.removeById(taskId);
         if (taskIsDeleted) {
-            return new ClientResponseDto<>(200, taskIsDeleted,errors);
+            return new ClientResponseDto<>(200, true,errors);
         } else {
             errors.add("Task not found with ID: " + taskId);
-            return new ClientResponseDto<>(400, false, errors);
+            return new ClientResponseDto<>(400, null, errors);
         }
     }
 

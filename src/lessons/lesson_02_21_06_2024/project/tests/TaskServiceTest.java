@@ -55,4 +55,51 @@ class TaskServiceTest {
         assertNull(null);
         assertFalse(response.getErrors().isEmpty());
     }
+
+    @Test
+    void findTaskById() {
+        TaskDto taskDto = new TaskDto("Brot", "Brot kaufen");
+        taskRepository.add(new Task(1, taskDto.getTaskNameDto(), taskDto.getTaskDescriptionDto(), false));
+        Integer id = 1;
+        ClientResponseDto<Task> responseDto = taskService.findTaskById(id);
+
+        assertEquals(200, responseDto.getResponseCode());
+        assertEquals("Brot", responseDto.getResponseInfo().getTaskName());
+        assertEquals("Brot kaufen", responseDto.getResponseInfo().getTaskDescription());
+        assertTrue(responseDto.getErrors().isEmpty());
+    }
+
+    @Test
+    void findTaskByIdError1() {
+        TaskDto taskDto = new TaskDto("Brot", "Brot kaufen");
+        taskRepository.add(new Task(1, taskDto.getTaskNameDto(), taskDto.getTaskDescriptionDto(), false));
+        Integer id = 3;
+        ClientResponseDto<Task> responseDto = taskService.findTaskById(id);
+
+        assertEquals(400, responseDto.getResponseCode());
+        assertNull(null);
+        assertFalse(responseDto.getErrors().isEmpty());
+    }
+
+    @Test
+    void findTaskByName() {
+        TaskDto taskDto = new TaskDto("Brot", "Brot kaufen");
+        taskRepository.add(new Task(1, taskDto.getTaskNameDto(), taskDto.getTaskDescriptionDto(), false));
+        String taskName = "Brot";
+        ClientResponseDto<List<Task>> responseDto = taskService.findTaskByName(taskName);
+
+        assertEquals(200, responseDto.getResponseCode());
+        assertTrue(responseDto.getErrors().isEmpty());
+    }
+    @Test
+    void findTaskByNameError() {
+        TaskDto taskDto = new TaskDto("Brot", "Brot kaufen");
+        taskRepository.add(new Task(1, taskDto.getTaskNameDto(), taskDto.getTaskDescriptionDto(), false));
+        String taskName = "brot";
+        ClientResponseDto<List<Task>> responseDto = taskService.findTaskByName(taskName);
+
+        assertEquals(400, responseDto.getResponseCode());
+        assertNull(null);
+        assertFalse(responseDto.getErrors().isEmpty());
+    }
 }
