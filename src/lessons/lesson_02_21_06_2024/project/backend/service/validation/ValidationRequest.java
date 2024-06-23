@@ -29,20 +29,4 @@ public class ValidationRequest {
         }
         return errors;
     }
-
-    public List<String> checkTaskDescription(String taskDescription) {
-        List<String> errors = new ArrayList<>();
-
-        if (taskDescription.isBlank()) {
-            errors.add("Task description must be not null \n");
-        }
-        if (taskDescription.length() < 3) {
-            errors.add("Task description cannot be less than 3 letters \n");
-        }
-        if (taskDescription.length() > 30) {
-            errors.add("Task description cannot be more than 30 letters \n");
-        }
-
-        return errors;
-    }
 }

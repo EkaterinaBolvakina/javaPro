@@ -30,12 +30,17 @@ public class TaskService {
             Task savedTask = taskRepository.add(newTaskForAdd);
             return new ClientResponseDto<>(200, savedTask, errors);
         } else {
-            return new ClientResponseDto<>(400, new Task(), errors);
+            return new ClientResponseDto<>(400, null, errors);
         }
     }
 
     public ClientResponseDto<Task> findTaskById(Integer taskId) {
-        List<String> errors = new ArrayList<>();
+        TaskDto taskDto = new TaskDto("SampleName", "SampleDescription");
+        List<String> errors = validationRequest.checkTask(taskDto);
+
+        if (!errors.isEmpty()) {
+            return new ClientResponseDto<>(400, null, errors);
+        }
         Optional<Task> optionalTask = taskRepository.findById(taskId);
         if (optionalTask.isPresent()) {
             Task foundedTask = optionalTask.get();
@@ -47,7 +52,12 @@ public class TaskService {
     }
 
     public ClientResponseDto<List<Task>> findTaskByName(String taskName) {
-        List<String> errors = new ArrayList<>();
+        TaskDto taskDto = new TaskDto(taskName, "SampleDescription");
+        List<String> errors = validationRequest.checkTask(taskDto);
+
+        if (!errors.isEmpty()) {
+            return new ClientResponseDto<>(400, null, errors);
+        }
         List<Task> foundedTasks = taskRepository.findTaskByNameStream(taskName);
         if (!foundedTasks.isEmpty()) {
             return new ClientResponseDto<>(200, foundedTasks, errors);
@@ -58,7 +68,12 @@ public class TaskService {
     }
 
     public ClientResponseDto<Boolean> deleteTaskById(Integer taskId) {
-        List<String> errors = new ArrayList<>();
+        TaskDto taskDto = new TaskDto("SampleName", "SampleDescription");
+        List<String> errors = validationRequest.checkTask(taskDto);
+
+        if (!errors.isEmpty()) {
+            return new ClientResponseDto<>(400, null, errors);
+        }
         Boolean taskIsDeleted = taskRepository.removeById(taskId);
         if (taskIsDeleted) {
             return new ClientResponseDto<>(200, taskIsDeleted,errors);
@@ -69,7 +84,8 @@ public class TaskService {
     }
 
     public ClientResponseDto<Task> updateTaskDescriptionById(Integer taskId, String newTaskDescription) {
-        List<String> errors = validationRequest.checkTaskDescription(newTaskDescription);
+        TaskDto taskDto = new TaskDto("SampleName", newTaskDescription);
+        List<String> errors = validationRequest.checkTask(taskDto);
 
         if (!errors.isEmpty()) {
             return new ClientResponseDto<>(400, null, errors);
