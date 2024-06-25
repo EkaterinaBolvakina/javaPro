@@ -47,7 +47,7 @@ public class TaskService {
             return new ClientResponseDto<>(200, foundedTask, errors);
         } else {
             errors.add("Task not found with ID: " + taskId);
-            return new ClientResponseDto<>(400, null, errors);
+            return new ClientResponseDto<>(404, new Task(), errors);
         }
     }
 
