@@ -1,11 +1,13 @@
-package group40.secondspringbootrest.repository;
+package homeworks.hw_06_additional_27_06_2024.springBootProjects.secondSpringBootREST.src.main.java.group40.secondspringbootrest.repository;
 
 import group40.secondspringbootrest.entity.ToDoEntity;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public class ToDoRepository implements InterfaceToDoRepository{
     private Integer idCounter = 1;
     private List<ToDoEntity> database = new ArrayList<>();

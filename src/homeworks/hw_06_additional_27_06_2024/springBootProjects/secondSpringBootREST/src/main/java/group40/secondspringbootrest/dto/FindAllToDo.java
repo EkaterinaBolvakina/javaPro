@@ -1,9 +1,11 @@
-package group40.secondspringbootrest.dto;
+package homeworks.hw_06_additional_27_06_2024.springBootProjects.secondSpringBootREST.src.main.java.group40.secondspringbootrest.dto;
 
 import group40.secondspringbootrest.entity.ToDoEntity;
+import lombok.Data;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Data
 public class FindAllToDo {
     private List<ToDoEntity> entities;
     private List<String> errorMessages;
